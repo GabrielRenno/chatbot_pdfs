@@ -12,7 +12,9 @@ from langchain.llms import HuggingFaceHub
 from langchain.llms import OpenAI
 from langchain.chains.summarize import load_summarize_chain
 import openai
-
+import os
+#openai.api_key =
+os.environ['OPENAI_API_KEY']
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 #openai.api_key = "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"
 
