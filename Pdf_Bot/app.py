@@ -7,13 +7,14 @@ from langchain.vectorstores import FAISS
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-from htmlTemplates import css, bot_template, user_template
+from Pdf_Bot.htmlTemplates import css, bot_template, user_template
 from langchain.llms import HuggingFaceHub
 from langchain.llms import OpenAI
 from langchain.chains.summarize import load_summarize_chain
+import openai
 
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-
+openai.api_key = "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"
 
 def summarize_text(vectordb):
     llm=OpenAI(temperature=0, openai_api_key=OPENAI_API_KEY)
@@ -82,7 +83,7 @@ def handle_userinput(user_question):
 
 
 def main():
-    #load_dotenv()
+    load_dotenv()
     st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":brain:")
     st.write(css, unsafe_allow_html=True)
