@@ -13,8 +13,8 @@ from langchain.llms import OpenAI
 from langchain.chains.summarize import load_summarize_chain
 import openai
 
-#OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-openai.api_key = "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"
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+#openai.api_key = "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"
 
 def summarize_text(vectordb):
     llm=OpenAI(temperature=0)
