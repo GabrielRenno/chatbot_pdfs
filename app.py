@@ -12,14 +12,12 @@ from langchain.llms import HuggingFaceHub
 from langchain.llms import OpenAI
 from langchain.chains.summarize import load_summarize_chain
 import openai
-import os
-#openai.api_key =
-os.environ['OPENAI_API_KEY']
-#openai.api_key = st.secrets["OPENAI_API_KEY"]
-#openai.api_key = "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"
+
+
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def summarize_text(vectordb):
-    llm=OpenAI(temperature=0)
+    llm=OpenAI(temperature=0,openai_api_key=st.secrets["OPENAI_API_KEY"])
     chain = load_summarize_chain(llm, chain_type="stuff")
     search = vectordb.similarity_search("Summary of the file")
     summary = chain.run(input_documents=search, question="Write a summary within 200 words.")
@@ -45,7 +43,7 @@ def get_text_chunks(text):
 
 def get_vectorstore(text_chunks, embedding_model):
     if embedding_model == "OpenAI":
-        embeddings = OpenAIEmbeddings()
+        embeddings = OpenAIEmbeddings(openai_api_key=st.secrets["OPENAI_API_KEY"])
     elif embedding_model == "HuggingFace":
         embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
     else:
@@ -57,7 +55,7 @@ def get_vectorstore(text_chunks, embedding_model):
 
 def get_conversation_chain(vectorstore, conversational_model, model_temperature=0.5):
     if conversational_model == "OpenAI":
-        llm = ChatOpenAI(temperature= model_temperature)
+        llm = ChatOpenAI(temperature= model_temperature,openai_api_key=st.secrets["OPENAI_API_KEY"])
     elif conversational_model == "HuggingFace":
         llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
 
